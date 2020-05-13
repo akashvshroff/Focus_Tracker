@@ -76,6 +76,7 @@ class AutoTracker:
         # for the last item that was being tracked
         self.usage[self.prev] += time.time() - self.start
         self.send_report()
+        # self.print_report()
 
     def print_report(self):  # mainly for debugging, isn't being called
         us = dict(self.usage)
@@ -126,8 +127,10 @@ def main():
     print("Welcome to the focus tracker! This is the primary set up")
     print("-"*20)
     print("Enter apps to track (only Chrome in browsers :\), separated by commas if more than 1")
+    print("If the app has 2 words in its name, enter any one.")
     apps = input()
-    apps_list = apps.split(',')
+    apps_l = apps.split(',')
+    apps_list = map(lambda x: x.strip(), apps_l)
     chr_yes_or_no = False if not 'Chrome' in apps_list else True
     if chr_yes_or_no:
         print("If Chrome, do you want to track websites separately? Yes or No")
