@@ -5,6 +5,7 @@ from datetime import date, datetime
 from collections import defaultdict
 import smtplib
 import sys
+import re
 from smtp_details import *
 
 
@@ -101,7 +102,10 @@ class AutoTracker:
             body += '\n'
         self.msg = '{}\n\n{}'.format(sub, body)
         mail = 'Subject:{}\n\n{}'.format(sub, body)
-        self.conn.sendmail(self.my_email, self.send_mail, mail)
+        try:
+            self.conn.sendmail(self.my_email, self.send_mail, mail)
+        except:
+            print("Couldn't send email")
         self.conn.quit()
         self.update_file()
 
@@ -139,7 +143,16 @@ def main():
     else:
         chrome_list = []
     print("Enter email to notify")
-    send_email = input()
+    while True:
+        send_email = input()
+        em = re.findall('[^@]+@[^@]+\.[^@]+', send_email)
+        em_valid = True if len(em) == 1 else False
+        if em_valid:
+            break
+        else:
+            print("Please enter a valid email")
+            continue
+    print("Timer will start automatically.")
 
 
 def driver():
