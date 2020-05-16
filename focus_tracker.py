@@ -14,6 +14,7 @@ class AutoTracker:
         print("Starting now")
         self.app_2_track = app_2_track
         self.chrome_sites = chrome_sites
+        self.usage = defaultdict(int)
         # initialise email requirements
         self.todays_date = date.today()
         self.my_email = my_email
@@ -24,7 +25,6 @@ class AutoTracker:
         self.conn.starttls()
         # Get your app password from https://support.google.com/accounts/answer/185833?hl=en
         self.conn.login(my_email, app_password)
-
         # initialise file updating
         self.fhand = open("Usage_Log.txt", 'a+')
         self.time_tracker()
@@ -45,7 +45,6 @@ class AutoTracker:
         return ''
 
     def time_tracker(self):
-        self.usage = defaultdict(int)
         self.start = time.time()  # initialise timer
         self.prev = ''  # window that is being tracked i.e in focus
         self.prev_not_tracked = False  # if not tracked before
